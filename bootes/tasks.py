@@ -1,8 +1,10 @@
 from abc import ABCMeta, abstractmethod
 
 from celery import Task
+from django.core.cache import cache
 
 from bootes.helpers import DistributedLock
+from pain.celery import app
 
 
 class RegisterMetaclass(ABCMeta):
@@ -34,12 +36,11 @@ class UpdateService(BaseTask):
     # To make Celery not register this task.
     __ignore = True
 
-    @transaction.atomic
     def run(self, email_address):
 
         if self.request.retries > 0:
             return self._run(email_address)
-
+        print("xxxxxx")
         with DistributedLock(self.THE_NAME, self.THE_RATE_LIMIT) as lock:
             countdown = lock.notify_start()
             return self.retry(countdown=countdown)
@@ -54,7 +55,7 @@ class UpdateService(BaseTask):
 
 
 class Service1Task(UpdateService):
-    THE_NAME = "Service 1"
+    THE_NAME = "Service_1"
     THE_RATE_LIMIT = 100  # per minute
 
     def testing(self, workday_service):
@@ -64,7 +65,7 @@ class Service1Task(UpdateService):
 
 
 class Service2Task(UpdateService):
-    THE_NAME = "Service 2"
+    THE_NAME = "Service_2"
     THE_RATE_LIMIT = 50  # per minute
 
     def testing(self, workday_service):
@@ -74,7 +75,7 @@ class Service2Task(UpdateService):
 
 
 class Service3Task(UpdateService):
-    THE_NAME = "Service 3"
+    THE_NAME = "Service_3"
     THE_RATE_LIMIT = 200  # per minute
 
     def testing(self, workday_service):

@@ -1,3 +1,7 @@
+import time
+import random
+
+from django.core.cache import cache
 
 
 class DistributedLock(object):
