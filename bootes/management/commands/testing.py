@@ -20,7 +20,7 @@ class Command(BaseCommand):
         for i in range(settings.TESTING_ROUNDS_COUNT):
             Service1Task().delay(i)
             Service2Task().delay(i)
-            Service3Task().delay(i)
+            # Service3Task().delay(i)
 
     def handle(self, *args, **kwargs):
         self.flush()
@@ -66,13 +66,13 @@ class Command(BaseCommand):
             msg = "\n".join([
                 "============ PASSED TIME: {} ==============".format(time.time() - start),
                 "Service 1 rate: {}  --- AVG rate: {} --- Count: {}".format(service1_rate,
-                                                                            round(sum(service_1_rates) / len(service_1_rates), 2),
+                                                                            round(sum(service_1_rates) / (len(service_1_rates) or 1), 2),
                                                                             service1_count),
                 "Service 2 rate: {}  --- AVG rate: {} --- Count: {}".format(service2_rate,
-                                                                            round(sum(service_2_rates) / len(service_2_rates), 2),
+                                                                            round(sum(service_2_rates) / (len(service_2_rates) or 1), 2),
                                                                             service2_count),
                 "Service 3 rate: {}  --- AVG rate: {} --- Count: {}".format(service3_rate,
-                                                                            round(sum(service_3_rates) / len(service_3_rates), 2),
+                                                                            round(sum(service_3_rates) / (len(service_3_rates) or 1), 2),
                                                                             service3_count),
             ])
             print(msg)

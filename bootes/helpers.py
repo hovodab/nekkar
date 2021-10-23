@@ -16,19 +16,22 @@ class DistributedLock(object):
         t = time.time()
         while not cache.add(self._key, True):
             time.sleep(random.uniform(0, 1))
-        print("#################################################### SLEEP TIME: {}".format(time.time() - t))
+        # print("#################################################### SLEEP TIME: {}".format(time.time() - t))
         self._locked = False
+        print("LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL")
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         if not self._locked:
             cache.delete(self._key)
+            print("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR")
 
     def notify_start(self):
         current_time = time.time()
-        last_value = float(cache.get(self._timestamp_key, current_time - self._delta))
-        if last_value + self._delta < current_time:
-            last_value = current_time - self._delta
-        last_value += self._delta
-        cache.set(self._timestamp_key, last_value)
-        return last_value - current_time
+        last_value = float(cache.get(self._timestamp_key, current_time))
+        print(f"------------last value: {last_value} --- current_time: {current_time}")
+        if last_value < current_time:
+            last_value = current_time
+        next_run_time = last_value + self._delta
+        cache.set(self._timestamp_key, next_run_time)
+        return next_run_time - current_time

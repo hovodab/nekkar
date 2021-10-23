@@ -39,10 +39,13 @@ class UpdateService(BaseTask):
     def run(self, email_address):
 
         if self.request.retries > 0:
+            print("SECOND")
             return self._run(email_address)
-        print("xxxxxx")
+        else:
+            print("FIRST")
         with DistributedLock(self.THE_NAME, self.THE_RATE_LIMIT) as lock:
             countdown = lock.notify_start()
+            print("NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN")
             return self.retry(countdown=countdown)
 
     def _run(self, email_address):
@@ -66,7 +69,7 @@ class Service1Task(UpdateService):
 
 class Service2Task(UpdateService):
     THE_NAME = "Service_2"
-    THE_RATE_LIMIT = 50  # per minute
+    THE_RATE_LIMIT = 60  # per minute
 
     def testing(self, workday_service):
         a = 9  # ** 3 ** 8
