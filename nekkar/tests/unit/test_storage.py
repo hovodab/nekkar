@@ -2,9 +2,9 @@ import time
 from unittest import TestCase
 from unittest.mock import Mock
 
-from core.storage import CallableRecord
-from core.storage import CallableRecordRepository
-from core.storage import CRTLock
+from nekkar.core.storage import CallableRecord
+from nekkar.core.storage import CallableRecordRepository
+from nekkar.core.storage import CRTLock
 
 
 class CallableRecordRepositoryTestCase(TestCase):

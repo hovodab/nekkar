@@ -2,7 +2,7 @@ import time
 from typing import List
 from typing import Optional
 
-from core.cache import BaseCache
+from nekkar.core.cache import BaseCache
 
 
 class CallableRecord:

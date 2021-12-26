@@ -3,13 +3,13 @@ import time
 from multiprocessing import Process
 from threading import Thread
 
-from core.cache import MemcachedCache
-from core.nekkar import Bootes
-from tests.manual.report import main as report_main
+from nekkar.core.cache import MemcachedCache
+from nekkar.core.limiter import Nekkar
+from nekkar.tests.manual.report import main as report_main
 
 
 cache = MemcachedCache("localhost", 11211)
-rate_limit = Bootes(cache=cache, auto_race_condition_resistance=True)
+rate_limit = Nekkar(cache=cache, auto_race_condition_resistance=True)
 
 
 def logg_time(name):

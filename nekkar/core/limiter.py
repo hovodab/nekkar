@@ -3,11 +3,11 @@ import time
 from threading import RLock
 from typing import Any
 
-from core.cache import BaseCache
-from core.exceptions import RetryMaxCountReached
-from core.storage import CallableRecord
-from core.storage import CallableRecordRepository
-from core.storage import CRTLock
+from nekkar.core.cache import BaseCache
+from nekkar.core.exceptions import RetryMaxCountReached
+from nekkar.core.storage import CallableRecord
+from nekkar.core.storage import CallableRecordRepository
+from nekkar.core.storage import CRTLock
 
 
 class CacheRaceConditionResistantProxy(BaseCache):
@@ -36,7 +36,7 @@ class CacheRaceConditionResistantProxy(BaseCache):
             return self._cache.delete(key)
 
 
-class Bootes:
+class Nekkar:
 
     def __init__(self, cache: BaseCache, auto_race_condition_resistance: bool = True):
         # Cache is shared between client calls.

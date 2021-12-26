@@ -2,7 +2,7 @@ import timeit
 from unittest import TestCase
 from unittest.mock import Mock
 
-from core.nekkar import ExecutionClient
+from nekkar.core.limiter import ExecutionClient
 
 
 class ExecutionClientTestCase(TestCase):

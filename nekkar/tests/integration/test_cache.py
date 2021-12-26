@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from core.cache import MemcachedCache
+from nekkar.core.cache import MemcachedCache
 
 
 class MemcachedCacheIntegrationTestCase(TestCase):

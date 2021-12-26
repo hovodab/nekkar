@@ -1,10 +1,10 @@
 import time
 
-from core.cache import MemcachedCache
-from core.nekkar import Bootes
+from nekkar.core.cache import MemcachedCache
+from nekkar.core.limiter import Nekkar
 
 cache = MemcachedCache("localhost", 11211)
-rate_limit = Bootes(cache=cache)
+rate_limit = Nekkar(cache=cache)
 
 
 class TestingAPIServiceMock:
