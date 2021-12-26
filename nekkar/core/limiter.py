@@ -64,11 +64,11 @@ class Nekkar:
 
         E.g. rate_limit=10. "r(n)" means methods n-th execution. "--" means 6 seconds interval.
             interval=None
-               |r1--r2--r3--r4--r5--r6--r7--r8--r9--r10--r11--r12...|
+                |r1--r2--r3--r4--r5--r6--r7--r8--r9--r10--r11--r12...|
             interval=0
-               |r1r2r3r4r5r6r7r8r9r10--------------------r11r12r13...|
+                |r1r2r3r4r5r6r7r8r9r10--------------------r11r12r13...|
             interval=12000
-            |r1----r2----r3----r4----r5----r6----r7----r8----r9----r10----r11----r12...|
+                |r1----r2----r3----r4----r5----r6----r7----r8----r9----r10----r11----r12...|
         """
         def decorator(function):
             def wrapper(*args, **kwargs):
