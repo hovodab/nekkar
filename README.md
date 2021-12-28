@@ -1,5 +1,5 @@
-# Rate limiter with distributed execution support
-=====================================
+Rate limiter with distributed execution support
+=================================================
 
 `nekkar` is a tool for limiting requests to particular service or to particular endpoint of the service.
 > The original idea was to create a rate limiter for HTTP APIs. But some kind of wrapper was needed to distinguish the endpoints and in current implementation it uses functions/callables.
@@ -35,8 +35,27 @@ $ pip install nekkar
 ```
 
 ## Usage
+Wrap function and set rate limit to 100.
+```python
+from nekkar.core.limiter import Nekkar
+from nekkar.core.cache import MemcachedCache
+
+
+# Create a cache object by providing address and port of the cache.
+cache = MemcachedCache("localhost", 11211)
+limiter = Nekkar(cache=cache)
+
+
+@limiter(name="some_id", rate_limit=100)
+def do_something():
+    """Do some request or useful stuff."""
+
+```
+
+
 Lets say rate limit works per endpoint, despite of request method.
-Lets say for endpoint '**/a**' it is 100, and for endpoint '**/b**' it is 250.
+For example if rate limit for endpoint '**/a**' it 100, and for endpoint '**/b**' rate limit it is 250.
+Then code which controls the rate limit could be similar to following:
 ```python
 import requests
 
@@ -74,11 +93,7 @@ for i in range(100):
 Any cache could be used for this tool until it implements the `nekkar.core.cache.BaseCache` interface.
 `MemcachedCache` is already implemented, but you can derive a class from BaseCache and implement similar for your desired cache.
 
-**Important**: add - method should set the key value only if the value is not already set, otherwise rate limiter will not work properly. To validate this you can add a test case similar to nekkar/tests/integration/test_cache.
-
-
-#### Basic interface for limiter
-TODO: Add graph of execution with different configurations with interval and without.
+**Important**: BaseCache.add() - method should set the key value only if the value is not already set, otherwise rate limiter will not work properly. To validate this you can add a test case similar to nekkar/tests/integration/test_cache.
 
 
 #### How does it work and why do you need a cache?
