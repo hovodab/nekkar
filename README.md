@@ -98,6 +98,7 @@ Any cache could be used for this tool until it implements the `nekkar.core.cache
 
 #### How does it work and why do you need a cache?
 The system tracks two "tables". One for storing when the callables was called, and another for locking the access to the first table records.
+
 ![Alt text](assets/crt_crt_lock.png?raw=true "CRT and CRT-Lock")
 
 The storage that will be used to store table information should have two main characteristics.
